@@ -1,26 +1,48 @@
-const fib = (x) => {
-    if (!x || x <= 1) return 1;
-    return fib(x-1) + fib(x-2);
-};
+var calculations = {
+    salasySum: function() {
+      return this.reduce(function(acc, next) {
+        return acc + next;
+      }, 0);
+    },
+    logName: function() {
+      this.forEach(function(user) {
+        console.log(user.name);
+      });
+    },
+    findUsersByIds: function(ids) {
+      return this.filter(function(user) {
+        return ids.find(function(id) {
+            return user.id === id;
+        })
+      });
+    }
+  };
+  
+  var users = [
+    {
+      id: 1,
+      name: "User 2",
+      salary: 200
+    },
+    {
+      id: 2,
+      name: "User 3",
+      salary: 200
+    },
+    {
+      id: 3,
+      name: "User 4",
+      salary: 200
+    }
+  ];
 
-const decorator = (fnc) => {
-    const cache = new Map();
-    return (x) => {
-        if(cache.has(x)) {
-            return cache.get(x);
-        };
+  calculations.salasySum.apply(users);
 
-        cache.set(x, fnc(x));
+  let salarys = users.map((value)=>{
+    return value.salary;
+  });
+  console.log(calculations.salasySum.call(salarys));
 
-        return cache.get(x);
-    };
-};
+  calculations.logName.call(users);
 
-const memoizedFib = decorator(fib);
-
-console.log(memoizedFib(40));
-
-console.log(memoizedFib(40));
-console.log(memoizedFib(40));
-console.log(memoizedFib(40));
-console.log(memoizedFib(40));
+  console.log(calculations.findUsersByIds.call(users, [1, 2, 3]));
